@@ -62,7 +62,7 @@ List<dynamic> extractArrayData(Map arrayData) {
     final parsedArray = <dynamic>[];
 
     for (var value in values) {
-      final parsedValue = parseToJson(value);
+      final parsedValue = parseToJson(value.toJson());
 
       parsedArray.add(parsedValue);
     }
