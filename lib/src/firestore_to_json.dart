@@ -18,7 +18,11 @@ dynamic parseToJson(Map values) {
         key == 'booleanValue' ||
         key == 'geoPointValue' ||
         key == 'referenceValue') {
-      return entry.value;
+      if (key == 'integerValue') {
+        return entry.value as int;
+      } else {
+        return entry.value;
+      }
     } else if (key == 'arrayValue') {
       return extractArrayData(entry.value.toJson());
     } else if (key == 'mapValue') {
