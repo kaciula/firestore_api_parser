@@ -18,6 +18,7 @@ dynamic parseToJson(Map values) {
         key == 'booleanValue' ||
         key == 'geoPointValue' ||
         key == 'referenceValue') {
+      print('value detected $key [${entry.value}]');
       return entry.value;
     } else if (key == 'arrayValue') {
       return extractArrayData(entry.value);
@@ -41,9 +42,9 @@ Map<String, dynamic> extractMapData(Map mapData) {
     final parsedMap = <String, dynamic>{};
 
     for (var entry in fields.entries) {
-      print('parse $entry');
-      final parsedEntryValue = parseToJson(entry.value);
-      print('value $parsedEntryValue');
+      print('!!!parse $entry');
+      final parsedEntryValue = parseToJson(entry.value.toJson());
+      print('!!!value $parsedEntryValue');
       parsedMap[entry.key] = parsedEntryValue;
     }
 
