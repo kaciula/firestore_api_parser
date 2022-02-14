@@ -1,7 +1,8 @@
 part of firestore_api_parser;
 
 @visibleForTesting
-Map<String, dynamic> toJsonFormat({required Map<String, dynamic> firestoreJson}) {
+Map<String, dynamic> toJsonFormat(
+    {required Map<String, dynamic> firestoreJson}) {
   final jsonMap = extractMapData(firestoreJson);
   return jsonMap;
 }
@@ -33,13 +34,16 @@ dynamic parseToJson(Map values) {
 
 @visibleForTesting
 Map<String, dynamic> extractMapData(Map mapData) {
+  print('mapdata $mapData');
   if (mapData['fields'] != null) {
     final fields = mapData['fields'] as Map;
 
     final parsedMap = <String, dynamic>{};
 
     for (var entry in fields.entries) {
+      print('parse $entry');
       final parsedEntryValue = parseToJson(entry.value);
+      print('value $parsedEntryValue');
       parsedMap[entry.key] = parsedEntryValue;
     }
 
