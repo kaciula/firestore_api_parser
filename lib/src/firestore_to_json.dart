@@ -19,7 +19,9 @@ dynamic parseToJson(Map values) {
         key == 'geoPointValue' ||
         key == 'referenceValue') {
       if (key == 'integerValue') {
-        return entry.value as int;
+        return int.parse(entry.value);
+      } else if (key == 'doubleValue') {
+        return double.parse(entry.value);
       } else {
         return entry.value;
       }
