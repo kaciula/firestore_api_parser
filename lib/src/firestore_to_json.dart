@@ -21,7 +21,7 @@ dynamic parseToJson(Map values) {
       print('value detected $key [${entry.value}]');
       return entry.value;
     } else if (key == 'arrayValue') {
-      return extractArrayData(entry.value);
+      return extractArrayData(entry.value.toJson());
     } else if (key == 'mapValue') {
       return extractMapData(entry.value.toJson());
     } else if (key == 'nullValue') {
