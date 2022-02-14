@@ -23,7 +23,7 @@ dynamic parseToJson(Map values) {
     } else if (key == 'arrayValue') {
       return extractArrayData(entry.value);
     } else if (key == 'mapValue') {
-      return extractMapData(entry.value);
+      return extractMapData(entry.value.toJson());
     } else if (key == 'nullValue') {
       return null;
     } else {
@@ -35,14 +35,13 @@ dynamic parseToJson(Map values) {
 
 @visibleForTesting
 Map<String, dynamic> extractMapData(Map mapData) {
-  print('mapdata $mapData');
   if (mapData['fields'] != null) {
     final fields = mapData['fields'] as Map;
 
     final parsedMap = <String, dynamic>{};
 
     for (var entry in fields.entries) {
-      print('!!!parse $entry');
+      print('Parse $entry');
       final parsedEntryValue = parseToJson(entry.value.toJson());
       print('!!!value $parsedEntryValue');
       parsedMap[entry.key] = parsedEntryValue;
