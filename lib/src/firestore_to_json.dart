@@ -46,9 +46,9 @@ Map<String, dynamic> extractMapData(Map mapData) {
     final parsedMap = <String, dynamic>{};
 
     for (var entry in fields.entries) {
-      print('Key: ${entry.key}');
+      // print('Key: ${entry.key}');
       final parsedEntryValue = parseToJson(entry.value.toJson());
-      print('Value: $parsedEntryValue');
+      // print('Value: $parsedEntryValue');
       parsedMap[entry.key] = parsedEntryValue;
     }
 
@@ -68,7 +68,7 @@ List<dynamic> extractArrayData(Map arrayData) {
 
     for (var value in values) {
       final parsedValue = parseToJson(value.toJson());
-      print('Value (array): $parsedValue');
+      // print('Value (array): $parsedValue');
 
       parsedArray.add(parsedValue);
     }
