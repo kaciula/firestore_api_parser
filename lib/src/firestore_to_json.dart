@@ -1,7 +1,8 @@
 part of firestore_api_parser;
 
 @visibleForTesting
-Map<String, dynamic> toJsonFormat({required Map<String, dynamic> firestoreJson}) {
+Map<String, dynamic> toJsonFormat(
+    {required Map<String, dynamic> firestoreJson}) {
   final jsonMap = extractMapData(firestoreJson);
   return jsonMap;
 }
@@ -17,11 +18,17 @@ dynamic parseToJson(Map values) {
         key == 'booleanValue' ||
         key == 'geoPointValue' ||
         key == 'referenceValue') {
-      return entry.value;
+      if (key == 'integerValue') {
+        return int.parse(entry.value);
+      } else if (key == 'doubleValue') {
+        return double.parse(entry.value);
+      } else {
+        return entry.value;
+      }
     } else if (key == 'arrayValue') {
-      return extractArrayData(entry.value);
+      return extractArrayData(entry.value.toJson());
     } else if (key == 'mapValue') {
-      return extractMapData(entry.value);
+      return extractMapData(entry.value.toJson());
     } else if (key == 'nullValue') {
       return null;
     } else {
@@ -39,7 +46,9 @@ Map<String, dynamic> extractMapData(Map mapData) {
     final parsedMap = <String, dynamic>{};
 
     for (var entry in fields.entries) {
-      final parsedEntryValue = parseToJson(entry.value);
+      // print('Key: ${entry.key}');
+      final parsedEntryValue = parseToJson(entry.value.toJson());
+      // print('Value: $parsedEntryValue');
       parsedMap[entry.key] = parsedEntryValue;
     }
 
@@ -58,14 +67,14 @@ List<dynamic> extractArrayData(Map arrayData) {
     final parsedArray = <dynamic>[];
 
     for (var value in values) {
-      final parsedValue = parseToJson(value);
+      final parsedValue = parseToJson(value.toJson());
+      // print('Value (array): $parsedValue');
 
       parsedArray.add(parsedValue);
     }
 
     return parsedArray;
   } else {
-    throw Exception(
-        'Cannot convert this Array (List) to a json readable format.\nThat sound like this is not a correct firestore Array representation.\nThe key "values" is missing,\nReceived Array(List) is $arrayData');
+    return [];
   }
 }
